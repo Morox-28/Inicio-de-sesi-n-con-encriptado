@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LogIn</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <img src="img/et_logo.png" alt="150">
+        </header>
+        <br>
+        <div class="login_box">
+            <h2>Iniciar Sesión</h2>
+            <input type="text" id="user" placeholder="Usuario">
+            <input type="password" id="pw" placeholder="Contraseña">
+            <button onclick="verificarLogin()">Ingresar</button>
+            <br></br>
+            <img id="cara" height="150">
+        </div>
+        <br>
+        <script>
+            async function verificarLogin() {
+                const usuario = document.getElementById("user").value;
+                const contrasena = document.getElementById("pw").value;
+        
+                const respuesta = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, contrasena })
+                });
+        
+                const resultado = await respuesta.json();
+        
+                if (resultado.exito) {
+                    if (resultado.usuario === 'sans') {
+                        document.getElementById("cara").src = "img/sans-undertale.png";
+                    } else {
+                        document.getElementById("cara").src = "img/inicioBien.png";
+                    }
+                } else {
+                    document.getElementById("cara").src = "img/inicioMal.png";
+                }
+            }
+        </script>
+        
+    </body>
+</html>
